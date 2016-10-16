@@ -33,11 +33,6 @@ const configurationSchema = Joi.object().keys({
     connections: Joi
       .array()
       .min(1)
-      .items(
-        Joi.object().keys({
-          port: Joi.number().required().min(0).max(65535)
-        })
-      )
       .required()
   }).required()
 })
