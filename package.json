@@ -1,5 +1,6 @@
 {
   "name": "@bmichalski/basic-hapi-api-server",
+  "version": "0.0.1",
   "description": "A basic Hapi based API server",
   "author": {
     "name": "Benjamin Michalski",
