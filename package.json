@@ -1,0 +1,46 @@
+{
+  "name": "@bmichalski/basic-hapi-api-server",
+  "description": "A basic Hapi based API server",
+  "author": {
+    "name": "Benjamin Michalski",
+    "email": "benjamin.michalski@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bmichalski-js/basic-hapi-api-server.git"
+  },
+  "main": "built/index.js",
+  "scripts": {
+    "run-demo": "npm run-script gulp && node ./built/demo/demo.js",
+    "gulp": "node ./node_modules/.bin/gulp",
+    "test": "rm -rf ./node_modules/ && npm install && npm run-script gulp && node ./node_modules/.bin/mocha",
+    "test-dev": "npm run-script gulp build:dev && node ./node_modules/.bin/mocha"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "hapi": "^15.1.1",
+    "hapi-swagger": "^7.2.0",
+    "inert": "^4.0.2",
+    "joi": "^9.1.0",
+    "lodash": "^4.16.2",
+    "nested-error-stacks": "^1.0.2",
+    "serialize-error": "^2.0.0",
+    "slugify": "^1.0.2",
+    "vision": "^4.1.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.16.0",
+    "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-changed": "^1.3.2",
+    "gulp-debug": "^2.1.2",
+    "hawk": "^6.0.0",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.6"
+  }
+}
