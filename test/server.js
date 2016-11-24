@@ -156,12 +156,23 @@ describe('server', function () {
   })
 
   //TODO Implement
-  describe.skip('authentication', function () {
-    describe('no authentication', function () {
+  describe('authentication', function () {
+    describe('unauthorized', function () {
       it('should return a 401', function (done) {
         const configuration = _.cloneDeep(commonConfiguration)
         configuration.api.usesAuthentication = true
         configuration.api.routes = _.cloneDeep(commonRoutesConfiguration)
+        configuration.api.authenticationStrategies = [
+          {
+            name: 'simple',
+            validate: function () {
+              return
+            }
+          }
+        ]
+        configuration.api.routes[0].config = {
+          auth: 'simple'
+        }
 
         initServer(configuration).then((server) => {
           server.start(function () {
@@ -184,8 +195,21 @@ describe('server', function () {
         const configuration = _.cloneDeep(commonConfiguration)
         configuration.api.usesAuthentication = true
         configuration.api.routes = _.cloneDeep(commonRoutesConfiguration)
+        configuration.api.authenticationStrategies = [
+          {
+            name: 'simple',
+            validate: function (request, username, password, callback) {
+              const isValid = username === 'foo' && password === 'bar'
 
-        // const authenticationHeader = ''
+              return callback(null, isValid, { id: username })
+            }
+          }
+        ]
+        configuration.api.routes[0].config = {
+          auth: 'simple'
+        }
+
+        const authenticationHeader = 'Basic Zm9vOmJhcg=='
 
         initServer(configuration).then((server) => {
           server.start(function () {
@@ -207,7 +231,43 @@ describe('server', function () {
     })
 
     describe('wrong authentication', function () {
-      //TODO
+      it('should return a 403', function (done) {
+        const configuration = _.cloneDeep(commonConfiguration)
+        configuration.api.usesAuthentication = true
+        configuration.api.routes = _.cloneDeep(commonRoutesConfiguration)
+        configuration.api.authenticationStrategies = [
+          {
+            name: 'simple',
+            validate: function (request, username, password, callback) {
+              const isValid = username === 'foo' && password === 'quz'
+
+              return callback(null, isValid)
+            }
+          }
+        ]
+        configuration.api.routes[0].config = {
+          auth: 'simple'
+        }
+
+        const authenticationHeader = 'Basic Zm9vOmJhcg=='
+
+        initServer(configuration).then((server) => {
+          server.start(function () {
+            server.inject({
+              method: 'GET',
+              url: '/hello-world',
+              headers: {
+                Authorization: authenticationHeader
+              }
+            }, (res) => {
+              expect(res.statusCode).to.equal(401)
+              expect(res.result).to.deep.equal({ status: 'unauthorized' })
+
+              done()
+            })
+          })
+        })
+      })
     })
   })
 

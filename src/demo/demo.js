@@ -2,7 +2,24 @@ import initServer from '../init-server'
 const port = process.env.DEMO_PORT === undefined ? 8080 : process.env.DEMO_PORT
 const usesAuthentication = process.env.DEMO_AUTHENTICATION === undefined ? false : 1 === parseInt(process.env.DEMO_AUTHENTICATION, 10)
 
-initServer({
+let authenticationStrategies
+
+if (usesAuthentication) {
+  authenticationStrategies = [
+    {
+      name: 'simple',
+      validate: function (request, username, password, callback) {
+        const isValid = username === 'hello' && password === 'world'
+
+        return callback(null, isValid, { id: 42 })
+      }
+    }
+  ]
+} else {
+  authenticationStrategies = []
+}
+
+const config = {
   api: {
     name: 'Demo server',
     version: '1',
@@ -79,7 +96,8 @@ initServer({
         }
       }
     ],
-    usesAuthentication
+    usesAuthentication,
+    authenticationStrategies
   },
   server: {
     connections: [
@@ -88,8 +106,26 @@ initServer({
       }
     ]
   }
-}).then((server) => {
+}
+
+if (usesAuthentication) {
+  config.api.routes.push({
+    method: 'GET',
+    path:'/hello-world-protected',
+    handler: (request, reply) => {
+      reply({
+        hello: 'world'
+      })
+    },
+    config: {
+      auth: 'simple',
+      description: 'Hello world'
+    }
+  })
+}
+
+initServer(config).then((server) => {
   server.start(() => {
-    console.log('Server started, listening on port ' + port)
+    console.log(`Server started, listening on port ${port} ${usesAuthentication ? 'with authentication': ''}`)
   })
 })

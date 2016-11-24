@@ -8,7 +8,6 @@ import serializeError from 'serialize-error'
 import Boom from 'boom'
 import ConfigurationError from './error/init-server/configuration-error'
 import PluginRegistrationError from './error/init-server/plugin-registration-error'
-import NotImplementedError from './error/init-server/not-implemented-error'
 import UncaughtError from './error/init-server/uncaught-error'
 
 const logsSchema = Joi.object().keys({
@@ -23,6 +22,10 @@ const apiConfigurationSchema = Joi.object({
   routes: Joi.array().items(Joi.object()),
   hasDocumentation: Joi.boolean().default(false),
   usesAuthentication: Joi.boolean().default(false),
+  authenticationStrategies: Joi.array().items(Joi.object().keys({
+    name: Joi.string().required().min(1),
+    validate: Joi.func().required()
+  })),
   globalTimeout: Joi.number().integer().min(0).default(2000)
 })
 
@@ -92,12 +95,11 @@ function initServer(rawConfiguration) {
   }
 
   if (apiConfiguration.usesAuthentication) {
-    //TODO
-    throw new NotImplementedError('Authentication feature is not yet implemented.')
+    plugins.push(require('hapi-auth-basic'))
   }
 
   server.ext('onPreResponse', function (request, reply) {
-    const response = request.response;
+    const response = request.response
 
     if (undefined !== response.request && response.request.path.indexOf('/api') !== 0) {
       return reply.continue()
@@ -149,6 +151,12 @@ function initServer(rawConfiguration) {
       (err) => {
         if (err) {
           throw new PluginRegistrationError('', err)
+        }
+
+        if (apiConfiguration.usesAuthentication) {
+          apiConfiguration.authenticationStrategies.forEach(function (authenticationStrategy) {
+            server.auth.strategy(authenticationStrategy.name, 'basic', { validateFunc: authenticationStrategy.validate })
+          })
         }
 
         const routes = apiConfiguration.routes
