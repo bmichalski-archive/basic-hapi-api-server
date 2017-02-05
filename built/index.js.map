@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "sources": [
+    "/index.js"
+  ],
+  "names": [
+    "module",
+    "exports"
+  ],
+  "mappings": ";;AAAA;;;;;;AAEAA,OAAOC,OAAP",
+  "file": "/index.js",
+  "sourcesContent": [
+    "import initServer from './init-server'\n\nmodule.exports = initServer"
+  ]
+}

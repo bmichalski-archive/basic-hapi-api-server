@@ -1,0 +1,23 @@
+{
+  "version": 3,
+  "sources": [
+    "/error/init-server/not-implemented-error.js"
+  ],
+  "names": [
+    "util",
+    "require",
+    "NestedError",
+    "InitServerNotImplementedError",
+    "message",
+    "nested",
+    "call",
+    "inherits",
+    "prototype",
+    "name"
+  ],
+  "mappings": ";;;;;AAAA,IAAMA,OAAOC,QAAQ,MAAR,CAAb;AACA,IAAMC,cAAcD,QAAQ,qBAAR,CAApB;;AAEA,SAASE,6BAAT,CAAuCC,OAAvC,EAAgDC,MAAhD,EAAwD;AACtDH,cAAYI,IAAZ,CAAiB,IAAjB,EAAuBF,OAAvB,EAAgCC,MAAhC;AACD;;AAEDL,KAAKO,QAAL,CAAcJ,6BAAd,EAA6CD,WAA7C;AACAC,8BAA8BK,SAA9B,CAAwCC,IAAxC,GAA+C,iDAA/C;;kBAEeN,6B",
+  "file": "/error/init-server/not-implemented-error.js",
+  "sourcesContent": [
+    "const util = require('util')\nconst NestedError = require('nested-error-stacks')\n\nfunction InitServerNotImplementedError(message, nested) {\n  NestedError.call(this, message, nested)\n}\n\nutil.inherits(InitServerNotImplementedError, NestedError)\nInitServerNotImplementedError.prototype.name = 'BasicHapiApiServerInitServerNotImplementedError'\n\nexport default InitServerNotImplementedError"
+  ]
+}

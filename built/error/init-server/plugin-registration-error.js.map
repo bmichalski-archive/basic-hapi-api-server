@@ -1,0 +1,23 @@
+{
+  "version": 3,
+  "sources": [
+    "/error/init-server/plugin-registration-error.js"
+  ],
+  "names": [
+    "util",
+    "require",
+    "NestedError",
+    "InitServerPluginRegistrationError",
+    "message",
+    "nested",
+    "call",
+    "inherits",
+    "prototype",
+    "name"
+  ],
+  "mappings": ";;;;;AAAA,IAAMA,OAAOC,QAAQ,MAAR,CAAb;AACA,IAAMC,cAAcD,QAAQ,qBAAR,CAApB;;AAEA,SAASE,iCAAT,CAA2CC,OAA3C,EAAoDC,MAApD,EAA4D;AAC1DH,cAAYI,IAAZ,CAAiB,IAAjB,EAAuBF,OAAvB,EAAgCC,MAAhC;AACD;;AAEDL,KAAKO,QAAL,CAAcJ,iCAAd,EAAiDD,WAAjD;AACAC,kCAAkCK,SAAlC,CAA4CC,IAA5C,GAAmD,qDAAnD;;kBAEeN,iC",
+  "file": "/error/init-server/plugin-registration-error.js",
+  "sourcesContent": [
+    "const util = require('util')\nconst NestedError = require('nested-error-stacks')\n\nfunction InitServerPluginRegistrationError(message, nested) {\n  NestedError.call(this, message, nested)\n}\n\nutil.inherits(InitServerPluginRegistrationError, NestedError)\nInitServerPluginRegistrationError.prototype.name = 'BasicHapiApiServerInitServerPluginRegistrationError'\n\nexport default InitServerPluginRegistrationError"
+  ]
+}

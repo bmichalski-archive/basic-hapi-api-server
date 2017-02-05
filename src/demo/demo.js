@@ -48,7 +48,7 @@ const config = {
           }))
         },
         config: {
-          description: 'Hello world'
+          description: 'Hello world using promise'
         }
       },
       {
@@ -56,6 +56,9 @@ const config = {
         path:'/internal-server-error',
         handler: function () {
           throw new Error('err')
+        },
+        config: {
+          description: 'Internal server error'
         }
       },
       {
@@ -63,6 +66,9 @@ const config = {
         path:'/internal-server-error-not-obj',
         handler: function () {
           throw 'err'
+        },
+        config: {
+          description: 'Internal server error with non object'
         }
       },
       {
@@ -72,6 +78,9 @@ const config = {
           reply(new Promise(() => {
             throw new Error('err')
           }))
+        },
+        config: {
+          description: 'Promise with unhandled rejection'
         }
       },
       {
@@ -81,6 +90,9 @@ const config = {
           reply(new Promise(() => {
             throw 'err'
           }))
+        },
+        config: {
+          description: 'Promise with unhandled rejection with non object'
         }
       },
       {
@@ -92,7 +104,8 @@ const config = {
         config: {
           timeout: {
             server: 200
-          }
+          },
+          description: 'Timeout'
         }
       }
     ],
@@ -119,10 +132,30 @@ if (usesAuthentication) {
     },
     config: {
       auth: 'simple',
-      description: 'Hello world'
+      description: 'Hello world with authentication'
     }
   })
 }
+
+const exposedRoutes = [];
+
+config.api.routes.forEach((route) => {
+  exposedRoutes.push({
+    path: 'http://localhost:8080' + route.path,
+    description: route.config.description
+  })
+})
+
+config.api.routes.push({
+  method: 'GET',
+  path:'/',
+  handler: (request, reply) => {
+    reply(exposedRoutes)
+  },
+  config: {
+    description: 'Exposed routes'
+  }
+})
 
 initServer(config).then((server) => {
   server.start(() => {

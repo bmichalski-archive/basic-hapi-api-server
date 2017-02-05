@@ -63,7 +63,9 @@ function initServer(rawConfiguration) {
   const transports = []
 
   if (logsConfiguration.console) {
-    transports.push(new (winston.transports.Console)())
+    transports.push(new (winston.transports.Console)({
+      json: true
+    }))
   }
 
   const logger = new (winston.Logger)({
@@ -183,8 +185,6 @@ function initServer(rawConfiguration) {
               route.config.tags.push('api')
             }
 
-            const initHandler = route.handler
-
             /**
              * Works around a bug.
              * To reproduce this bug:
@@ -192,7 +192,13 @@ function initServer(rawConfiguration) {
              * * next try another request: it hangs
              * * abort
              * * try another request: this one does not hang
+             *
+             * I could not reproduce easily reproduce this with tests.
+             *
+             * TODO Reproduce this in tests
              */
+            const initHandler = route.handler
+
             route.handler = (request, reply) => {
               try {
                 return initHandler(request, reply)
@@ -212,6 +218,7 @@ function initServer(rawConfiguration) {
                 )
               }
             }
+            /** End of workaround */
 
             server.route(route)
           })

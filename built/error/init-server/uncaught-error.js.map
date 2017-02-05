@@ -1,0 +1,23 @@
+{
+  "version": 3,
+  "sources": [
+    "/error/init-server/uncaught-error.js"
+  ],
+  "names": [
+    "util",
+    "require",
+    "NestedError",
+    "InitServerUncaughtError",
+    "message",
+    "nested",
+    "call",
+    "inherits",
+    "prototype",
+    "name"
+  ],
+  "mappings": ";;;;;AAAA,IAAMA,OAAOC,QAAQ,MAAR,CAAb;AACA,IAAMC,cAAcD,QAAQ,qBAAR,CAApB;;AAEA,SAASE,uBAAT,CAAiCC,OAAjC,EAA0CC,MAA1C,EAAkD;AAChDH,cAAYI,IAAZ,CAAiB,IAAjB,EAAuBF,OAAvB,EAAgCC,MAAhC;AACD;;AAEDL,KAAKO,QAAL,CAAcJ,uBAAd,EAAuCD,WAAvC;AACAC,wBAAwBK,SAAxB,CAAkCC,IAAlC,GAAyC,2CAAzC;;kBAEeN,uB",
+  "file": "/error/init-server/uncaught-error.js",
+  "sourcesContent": [
+    "const util = require('util')\nconst NestedError = require('nested-error-stacks')\n\nfunction InitServerUncaughtError(message, nested) {\n  NestedError.call(this, message, nested)\n}\n\nutil.inherits(InitServerUncaughtError, NestedError)\nInitServerUncaughtError.prototype.name = 'BasicHapiApiServerInitServerUncaughtError'\n\nexport default InitServerUncaughtError"
+  ]
+}

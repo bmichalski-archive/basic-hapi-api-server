@@ -1,6 +1,9 @@
+require('source-map-support').install({ handleUncaughtExceptions: false })
+
 'use strict';
 
 process.on('unhandledRejection', function (reason) {
   throw reason;
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluaXQuanMiXSwibmFtZXMiOlsicHJvY2VzcyIsIm9uIiwicmVhc29uIl0sIm1hcHBpbmdzIjoiOztBQUFBQSxRQUFRQyxFQUFSLENBQVcsb0JBQVgsRUFBaUMsVUFBQ0MsTUFBRCxFQUFZO0FBQzNDLFFBQU1BLE1BQU47QUFDRCxDQUZEIiwiZmlsZSI6ImluaXQuanMiLCJzb3VyY2VzQ29udGVudCI6WyJwcm9jZXNzLm9uKCd1bmhhbmRsZWRSZWplY3Rpb24nLCAocmVhc29uKSA9PiB7XG4gIHRocm93IHJlYXNvblxufSlcbiJdfQ==
+
+//# sourceMappingURL=./init.js.map

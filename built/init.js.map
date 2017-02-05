@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "sources": [
+    "/init.js"
+  ],
+  "names": [
+    "process",
+    "on",
+    "reason"
+  ],
+  "mappings": ";;AAAAA,QAAQC,EAAR,CAAW,oBAAX,EAAiC,UAACC,MAAD,EAAY;AAC3C,QAAMA,MAAN;AACD,CAFD",
+  "file": "/init.js",
+  "sourcesContent": [
+    "process.on('unhandledRejection', (reason) => {\n  throw reason\n})\n"
+  ]
+}

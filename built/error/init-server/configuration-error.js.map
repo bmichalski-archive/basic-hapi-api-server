@@ -1,0 +1,23 @@
+{
+  "version": 3,
+  "sources": [
+    "/error/init-server/configuration-error.js"
+  ],
+  "names": [
+    "util",
+    "require",
+    "NestedError",
+    "InitServerConfigurationError",
+    "message",
+    "nested",
+    "call",
+    "inherits",
+    "prototype",
+    "name"
+  ],
+  "mappings": ";;;;;AAAA,IAAMA,OAAOC,QAAQ,MAAR,CAAb;AACA,IAAMC,cAAcD,QAAQ,qBAAR,CAApB;;AAEA,SAASE,4BAAT,CAAsCC,OAAtC,EAA+CC,MAA/C,EAAuD;AACrDH,cAAYI,IAAZ,CAAiB,IAAjB,EAAuBF,OAAvB,EAAgCC,MAAhC;AACD;;AAEDL,KAAKO,QAAL,CAAcJ,4BAAd,EAA4CD,WAA5C;AACAC,6BAA6BK,SAA7B,CAAuCC,IAAvC,GAA8C,gDAA9C;;kBAEeN,4B",
+  "file": "/error/init-server/configuration-error.js",
+  "sourcesContent": [
+    "const util = require('util')\nconst NestedError = require('nested-error-stacks')\n\nfunction InitServerConfigurationError(message, nested) {\n  NestedError.call(this, message, nested)\n}\n\nutil.inherits(InitServerConfigurationError, NestedError)\nInitServerConfigurationError.prototype.name = 'BasicHapiApiServerInitServerConfigurationError'\n\nexport default InitServerConfigurationError"
+  ]
+}
