@@ -232,8 +232,7 @@ function initServer(rawConfiguration) {
               return reply(_boom2.default.wrap(new _uncaughtError2.default('', causedBy)));
             }
           };
-
-          //End of workaround
+          /** End of workaround */
 
           server.route(route);
         });
